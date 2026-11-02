@@ -1,0 +1,743 @@
+[
+  {
+    "id": "chicken-katsu",
+    "base_servings": 2,
+    "category": "Plat",
+    "description": "Escalope de poulet farcie jambon-mozzarella, panée au panko, avec sauce tonkatsu maison et salade de concombre au sésame.",
+    "ingredients": [
+      {
+        "amount": 2,
+        "id": "0001",
+        "name": "blancs de poulet (un de 200 g, un de 140 g)"
+      },
+      {
+        "amount": 2,
+        "id": "0002",
+        "name": "tranches de jambon blanc"
+      },
+      {
+        "amount": 80,
+        "id": "0003",
+        "name": "mozzarella bien égouttée",
+        "unit": "g"
+      },
+      {
+        "amount": 60,
+        "id": "0004",
+        "name": "farine",
+        "unit": "g"
+      },
+      {
+        "amount": 2,
+        "fixed": true,
+        "id": "0005",
+        "name": "gros œufs"
+      },
+      {
+        "amount": 80,
+        "id": "0006",
+        "name": "chapelure panko",
+        "unit": "g"
+      },
+      {
+        "amount": 500,
+        "fixed": true,
+        "id": "0007",
+        "name": "huile neutre de friture (2 cm de profondeur)",
+        "unit": "ml"
+      },
+      {
+        "amount": 0.75,
+        "id": "0008",
+        "name": "sel fin",
+        "unit": "tsp"
+      },
+      {
+        "amount": 0.25,
+        "id": "0009",
+        "name": "poivre noir moulu",
+        "unit": "tsp"
+      },
+      {
+        "amount": 3,
+        "id": "0010",
+        "name": "ketchup",
+        "unit": "tbsp"
+      },
+      {
+        "amount": 1.5,
+        "id": "0011",
+        "name": "sauce Worcestershire",
+        "unit": "tbsp"
+      },
+      {
+        "amount": 2,
+        "id": "0012",
+        "name": "sauce soja",
+        "unit": "tsp"
+      },
+      {
+        "amount": 2,
+        "id": "0013",
+        "name": "sucre en poudre",
+        "unit": "tsp"
+      },
+      {
+        "amount": 0.5,
+        "id": "0014",
+        "name": "moutarde",
+        "unit": "tsp"
+      },
+      {
+        "amount": 1,
+        "id": "0015",
+        "name": "concombre"
+      },
+      {
+        "amount": 2,
+        "id": "0016",
+        "name": "vinaigre de riz",
+        "unit": "tsp"
+      },
+      {
+        "amount": 1,
+        "id": "0017",
+        "name": "huile de sésame grillé",
+        "unit": "tsp"
+      },
+      {
+        "amount": 2,
+        "id": "0018",
+        "name": "graines de sésame",
+        "unit": "tsp"
+      },
+      {
+        "amount": 170,
+        "id": "0019",
+        "name": "riz japonais (type sushi)",
+        "unit": "g"
+      }
+    ],
+    "notes": "Température à cœur : 74 °C. Si les escalopes sont épaisses, finir 5 minutes au four à 180 °C après la friture.\n\nSans friture : friteuse à air, huile en spray, 200 °C pendant 12 à 14 minutes en retournant à mi-cuisson. Moins croustillant, mais très correct.\n\nSans Worcestershire : 1 c. à soupe de sauce soja et ½ c. à café de vinaigre balsamique pour 1,5 c. à soupe de Worcestershire.\n\nSans panko : de la chapelure classique fonctionne, la croûte est plus fine. Presser un peu moins fort et compter 1 minute de moins par face.\n\nÀ préparer à l'avance : escalopes panées 24 h au frais, ou 1 mois au congélateur (frire directement, 2 minutes de plus).",
+    "order": 1,
+    "steps": [
+      {
+        "content": "Mélanger au fouet {0010}, {0011}, {0012}, {0013} et {0014}. Goûter et ajuster : plus de sucre si c'est trop acide, plus de Worcestershire si c'est trop doux. Réserver au frais.",
+        "id": "s1",
+        "title": "Préparer la sauce tonkatsu"
+      },
+      {
+        "content": "Couper {0015} en fines rondelles. Saler légèrement, laisser dégorger 10 minutes dans une passoire, puis presser doucement. Assaisonner avec {0016}, {0017} et {0018}. Réserver au frais.",
+        "id": "s2",
+        "timer_seconds": 600,
+        "title": "Salade de concombre"
+      },
+      {
+        "content": "Rincer {0019} à l'eau froide 4 à 5 fois, jusqu'à ce que l'eau soit claire. Cuire selon les indications du paquet, puis laisser reposer 10 minutes à couvert hors du feu.",
+        "id": "s3",
+        "timer_seconds": 600,
+        "title": "Cuire le riz"
+      },
+      {
+        "content": "Fendre {0001} horizontalement en portefeuille, sans aller jusqu'au bout. Aplatir au rouleau entre deux feuilles de papier cuisson jusqu'à 1 cm environ. Assaisonner l'intérieur avec {0008} et {0009}.",
+        "id": "s4",
+        "title": "Ouvrir les escalopes"
+      },
+      {
+        "content": "Couper {0003} en bâtonnets et l'éponger : l'humidité fait fuir le fromage. Répartir les deux tiers sur la grande escalope, le reste sur la petite, avec {0002} plié en dessous. Laisser 1,5 cm de marge, refermer, presser les bords et piquer 2 ou 3 cure-dents.",
+        "id": "s5",
+        "title": "Farcir et refermer"
+      },
+      {
+        "content": "Trois assiettes creuses : {0004}, puis {0005} battus, puis {0006}. Passer chaque escalope dans la farine, l'œuf, puis le panko en pressant fermement. Repasser une seconde fois dans l'œuf puis le panko.",
+        "id": "s6",
+        "title": "Paner à l'anglaise"
+      },
+      {
+        "content": "Poser les escalopes sur une grille et réfrigérer 20 minutes pour que la panure se fixe.",
+        "id": "s7",
+        "timer_seconds": 1200,
+        "title": "Repos au frais"
+      },
+      {
+        "content": "Verser {0007} dans une sauteuse à bords hauts et chauffer à 170 °C. Sans thermomètre, une miette de panko doit grésiller et remonter en 2 secondes sans brunir aussitôt.",
+        "id": "s8",
+        "title": "Chauffer l'huile"
+      },
+      {
+        "content": "Frire les deux escalopes ensemble, 4 minutes par face, en commençant par la plus épaisse (30 secondes de plus par face). Elles doivent être brun doré. Égoutter sur une grille, pas sur du papier absorbant.",
+        "id": "s9",
+        "timer_seconds": 480,
+        "title": "Frire les escalopes"
+      },
+      {
+        "content": "Laisser reposer 3 minutes, retirer les cure-dents et trancher en lanières de 2 cm d'un geste net. Servir avec le riz, la salade de concombre et la sauce à part.",
+        "id": "s10",
+        "timer_seconds": 180,
+        "title": "Repos et découpe"
+      }
+    ],
+    "title": "Chicken katsu façon cordon bleu",
+    "total_minutes": 35
+  },
+  {
+    "id": "pizza-jambon-champignons-oeuf",
+    "base_servings": 4,
+    "category": "Pizza",
+    "description": "Pâte du commerce, sauce tomate maison, mozzarella fondante et œuf coulant ajouté en fin de cuisson.",
+    "ingredients": [
+      {
+        "amount": 2,
+        "id": "0001",
+        "name": "pâtes à pizza du commerce (280 à 300 g chacune)"
+      },
+      {
+        "amount": 400,
+        "id": "0002",
+        "name": "tomates pelées ou coulis",
+        "unit": "g"
+      },
+      {
+        "amount": 2,
+        "id": "0003",
+        "name": "gousses d'ail"
+      },
+      {
+        "amount": 1,
+        "id": "0004",
+        "name": "origan séché",
+        "unit": "tsp"
+      },
+      {
+        "amount": 300,
+        "id": "0005",
+        "name": "mozzarella (fior di latte de préférence)",
+        "unit": "g"
+      },
+      {
+        "amount": 250,
+        "id": "0006",
+        "name": "champignons de Paris frais",
+        "unit": "g"
+      },
+      {
+        "amount": 150,
+        "id": "0007",
+        "name": "jambon blanc ou jambon cuit supérieur",
+        "unit": "g"
+      },
+      {
+        "amount": 1,
+        "id": "0008",
+        "name": "huile d'olive pour les champignons",
+        "unit": "tbsp"
+      },
+      {
+        "amount": 1,
+        "id": "0009",
+        "name": "sel pour les champignons",
+        "unit": "pinch"
+      },
+      {
+        "amount": 1,
+        "id": "0010",
+        "name": "farine ou semoule fine, pour étaler",
+        "unit": "tbsp"
+      },
+      {
+        "amount": 2,
+        "id": "0011",
+        "name": "œufs (1 par pizza)"
+      }
+    ],
+    "notes": "Sortir la pâte du frigo 20 à 30 minutes avant de l'étaler : froide, elle se rétracte.\n\nCasser l'œuf directement sur la pizza en visant le centre. Si le jaune part sur le bord, il cuira quand même.\n\nSans pierre à pizza : préchauffer une plaque retournée dans le four.\n\nPour la suite : œuf mis à part, quelques copeaux de parmesan, du basilic frais ou de l'oignon rouge cru ajoutés après cuisson relèvent bien le trio jambon-champignons-mozzarella.",
+    "order": 2,
+    "steps": [
+      {
+        "content": "Émincer {0006} et les faire sauter à la poêle avec {0008} et {0009} à feu vif pendant 5 minutes, jusqu'à évaporation de l'eau et légère coloration. Réserver.",
+        "id": "s1",
+        "timer_seconds": 300,
+        "title": "Cuire les champignons"
+      },
+      {
+        "content": "Écraser {0002} à la fourchette, ajouter {0003} pressées et {0004}. Saler légèrement. La sauce ne se cuit pas, elle cuira sur la pizza.",
+        "id": "s2",
+        "title": "Préparer la sauce tomate"
+      },
+      {
+        "content": "Préchauffer à la température maximale (250 à 280 °C) avec une pierre ou une plaque à l'intérieur, au moins 30 minutes.",
+        "id": "s3",
+        "timer_seconds": 1800,
+        "title": "Préchauffer le four"
+      },
+      {
+        "content": "Étaler {0001} sur un plan fariné avec {0010}, en un disque le plus fin possible. Si la pâte se rétracte, la laisser reposer 5 minutes puis continuer.",
+        "id": "s4",
+        "title": "Étaler la pâte"
+      },
+      {
+        "content": "Étaler une fine couche de sauce en laissant 1,5 cm de bord. Répartir {0005} en morceaux, puis les champignons et {0007} déchiré en lanières. Laisser un espace dégagé au centre pour l'œuf.",
+        "id": "s5",
+        "title": "Garnir"
+      },
+      {
+        "content": "Enfourner sur la pierre chaude (ou la plaque) pendant 6 à 7 minutes, jusqu'à ce que la pâte commence à dorer et le fromage à fondre.",
+        "id": "s6",
+        "timer_seconds": 400,
+        "title": "Première cuisson"
+      },
+      {
+        "content": "Sortir la pizza, casser {0011} au centre de chaque pizza et remettre au four 4 à 5 minutes, jusqu'à ce que le blanc soit pris et le jaune encore coulant.",
+        "id": "s7",
+        "timer_seconds": 300,
+        "title": "Ajouter l'œuf et terminer"
+      }
+    ],
+    "title": "Pizza jambon, champignons et œuf",
+    "total_minutes": 45
+  },
+  {
+    "id": "pates-burrata-peches",
+    "base_servings": 2,
+    "category": "Pâtes",
+    "description": "Pâtes aux pêches poêlées, burrata crémeuse et jambon cru croustillant, relevées de citron et de basilic.",
+    "ingredients": [
+      {
+        "amount": 220,
+        "id": "0001",
+        "name": "pâtes courtes (rigatoni ou casarecce)",
+        "unit": "g"
+      },
+      {
+        "amount": 2,
+        "id": "0002",
+        "name": "pêches jaunes mûres (ou 4 moitiés de pêches au sirop égouttées)"
+      },
+      {
+        "amount": 2,
+        "id": "0003",
+        "name": "burratas (125 g chacune)"
+      },
+      {
+        "amount": 4,
+        "id": "0004",
+        "name": "tranches de jambon cru"
+      },
+      {
+        "amount": 2,
+        "id": "0005",
+        "name": "huile d'olive",
+        "unit": "tbsp"
+      },
+      {
+        "amount": 1,
+        "id": "0006",
+        "name": "gousse d'ail"
+      },
+      {
+        "amount": 1,
+        "id": "0007",
+        "name": "miel (à supprimer avec des pêches au sirop)",
+        "unit": "tsp"
+      },
+      {
+        "amount": 0.5,
+        "id": "0008",
+        "name": "citron jaune (zeste et jus)"
+      },
+      {
+        "amount": 10,
+        "id": "0009",
+        "name": "feuilles de basilic frais"
+      },
+      {
+        "amount": 20,
+        "id": "0010",
+        "name": "parmesan râpé",
+        "unit": "g"
+      },
+      {
+        "amount": 1,
+        "id": "0011",
+        "name": "sel (eau de cuisson)",
+        "unit": "tsp"
+      },
+      {
+        "amount": 1,
+        "id": "0012",
+        "name": "poivre noir du moulin",
+        "unit": "pinch"
+      }
+    ],
+    "notes": "Hors saison, des pêches au sirop bien égouttées et épongées fonctionnent très bien (4 moitiés pour 2 pêches). Elles ont déjà du sucre : supprimer le miel et finir avec un peu plus de citron.\n\nSortir la burrata du frigo 20 minutes avant : plus crémeuse, moins froide sur les pâtes chaudes.\n\nOption croquante : pistaches concassées ou amandes effilées grillées. Version sans viande : tomates cerises poêlées à la place du jambon cru.",
+    "order": 3,
+    "steps": [
+      {
+        "content": "Porter une grande casserole d'eau à ébullition avec {0011}. Sortir {0003} du frigo. Zester {0008}, puis presser son jus. Hacher finement {0006}. Couper {0002} en quartiers de 1,5 cm, sans les éplucher.",
+        "id": "s1",
+        "title": "Préparer les ingrédients"
+      },
+      {
+        "content": "Plonger {0001} dans l'eau bouillante et cuire 1 minute de moins que le temps indiqué. Réserver un grand verre d'eau de cuisson avant d'égoutter.",
+        "id": "s2",
+        "timer_seconds": 600,
+        "title": "Cuire les pâtes"
+      },
+      {
+        "content": "Chauffer {0005} à feu moyen-vif dans une grande poêle. Ajouter les pêches, cuire 3 minutes par face jusqu'à coloration. Ajouter {0006} et {0007}, cuire 1 minute, puis couper le feu. Avec des pêches au sirop, compter 2 minutes par face.",
+        "id": "s3",
+        "timer_seconds": 420,
+        "title": "Poêler les pêches"
+      },
+      {
+        "content": "Dans une seconde poêle sèche, griller {0004} 1 minute par face. Les laisser refroidir sur du papier absorbant : elles durcissent en refroidissant.",
+        "id": "s4",
+        "timer_seconds": 120,
+        "title": "Croustiller le jambon"
+      },
+      {
+        "content": "Verser les pâtes égouttées dans la poêle des pêches, ajouter un demi-verre d'eau de cuisson, le jus de citron et la moitié du zeste. Remuer 1 minute à feu doux jusqu'à ce que la sauce nappe les pâtes.",
+        "id": "s5",
+        "title": "Mélanger"
+      },
+      {
+        "content": "Répartir les pâtes dans deux assiettes. Poser une burrata au centre de chacune et l'ouvrir à la cuillère. Parsemer de {0010}, du reste de zeste, de {0012}, de {0009} déchiré à la main et du jambon émietté.",
+        "id": "s6",
+        "title": "Dresser et servir"
+      }
+    ],
+    "title": "Pâtes burrata, pêches et jambon cru",
+    "total_minutes": 25
+  },
+  {
+    "id": "bowl-poke-saumon",
+    "base_servings": 2,
+    "category": "Bowl",
+    "description": "Riz vinaigré, saumon cru mariné au soja-gingembre, avocat, edamame, concombre et mangue, avec une mayo épicée.",
+    "ingredients": [
+      {
+        "amount": 170,
+        "id": "0001",
+        "name": "riz japonais (type sushi)",
+        "unit": "g"
+      },
+      {
+        "amount": 2,
+        "id": "0002",
+        "name": "vinaigre de riz (pour le riz)",
+        "unit": "tbsp"
+      },
+      {
+        "amount": 2,
+        "id": "0003",
+        "name": "sucre en poudre (pour le riz)",
+        "unit": "tsp"
+      },
+      {
+        "amount": 1,
+        "id": "0004",
+        "name": "sel fin",
+        "unit": "pinch"
+      },
+      {
+        "amount": 250,
+        "id": "0005",
+        "name": "saumon frais qualité sushi, sans peau",
+        "unit": "g"
+      },
+      {
+        "amount": 2,
+        "id": "0006",
+        "name": "sauce soja (pour la marinade)",
+        "unit": "tbsp"
+      },
+      {
+        "amount": 1,
+        "id": "0007",
+        "name": "huile de sésame grillé",
+        "unit": "tsp"
+      },
+      {
+        "amount": 1,
+        "id": "0008",
+        "name": "vinaigre de riz (pour la marinade)",
+        "unit": "tsp"
+      },
+      {
+        "amount": 1,
+        "id": "0009",
+        "name": "miel",
+        "unit": "tsp"
+      },
+      {
+        "amount": 1,
+        "id": "0010",
+        "name": "gingembre frais râpé",
+        "unit": "tsp"
+      },
+      {
+        "amount": 1,
+        "id": "0011",
+        "name": "avocat bien mûr, grand"
+      },
+      {
+        "amount": 0.5,
+        "id": "0012",
+        "name": "concombre"
+      },
+      {
+        "amount": 100,
+        "id": "0013",
+        "name": "edamame écossés (surgelés)",
+        "unit": "g"
+      },
+      {
+        "amount": 0.5,
+        "id": "0014",
+        "name": "mangue mûre"
+      },
+      {
+        "amount": 2,
+        "id": "0015",
+        "name": "oignons nouveaux ou ciboule"
+      },
+      {
+        "amount": 2,
+        "id": "0016",
+        "name": "mayonnaise",
+        "unit": "tbsp"
+      },
+      {
+        "amount": 1,
+        "id": "0017",
+        "name": "sriracha ou sauce piment douce",
+        "unit": "tsp"
+      },
+      {
+        "amount": 1,
+        "id": "0018",
+        "name": "jus de citron vert ou jaune",
+        "unit": "tsp"
+      },
+      {
+        "amount": 1,
+        "id": "0019",
+        "name": "graines de sésame grillées",
+        "unit": "tbsp"
+      }
+    ],
+    "notes": "Saumon cru : choisir un poisson indiqué « pour consommation crue » ou « qualité sushi », acheté le jour même ou la veille. À éviter pour les femmes enceintes et les personnes fragiles.\n\nSans poisson cru : saumon poêlé 2 minutes par face puis effeuillé, crevettes cuites ou tofu mariné de la même façon.\n\nLe riz se prépare la veille : le garder à température ambiante sous un linge humide, jamais au frigo. L'avocat se coupe au dernier moment.\n\nIdée : une cuillère de ricotta au centre du bowl se marie bien avec le saumon.",
+    "order": 4,
+    "steps": [
+      {
+        "content": "Rincer {0001} à l'eau froide 4 à 5 fois jusqu'à ce que l'eau soit claire. Cuire selon les indications du paquet, puis laisser reposer 10 minutes à couvert hors du feu.",
+        "id": "s1",
+        "timer_seconds": 1200,
+        "title": "Cuire le riz"
+      },
+      {
+        "content": "Chauffer {0002}, {0003} et {0004} 30 secondes pour dissoudre le sucre. Verser sur le riz encore tiède et mélanger en coupant, sans écraser. Éventer 2 minutes, puis couvrir d'un linge humide.",
+        "id": "s2",
+        "timer_seconds": 120,
+        "title": "Assaisonner le riz"
+      },
+      {
+        "content": "Mélanger {0006}, {0007}, {0008}, {0009} et {0010}. Couper {0005} en dés de 2 cm avec un couteau bien aiguisé, les mélanger délicatement à la marinade et réserver au frais 15 minutes, pas plus : le soja salerait et foncerait le saumon.",
+        "id": "s3",
+        "timer_seconds": 900,
+        "title": "Mariner le saumon"
+      },
+      {
+        "content": "Plonger {0013} dans l'eau bouillante 3 minutes, égoutter et rafraîchir. Couper {0012} en demi-rondelles fines et {0014} en dés. Émincer {0015} finement.",
+        "id": "s4",
+        "timer_seconds": 180,
+        "title": "Préparer les garnitures"
+      },
+      {
+        "content": "Mélanger {0016}, {0017} et {0018}. Goûter et ajuster le piquant.",
+        "id": "s5",
+        "title": "Préparer la sauce"
+      },
+      {
+        "content": "Couper {0011} juste avant de servir. Répartir le riz dans deux bols, puis disposer le saumon égoutté, l'avocat, le concombre, la mangue et l'edamame en bouquets séparés. Napper de sauce, parsemer de {0019} et d'oignon nouveau.",
+        "id": "s6",
+        "title": "Dresser les bols"
+      }
+    ],
+    "title": "Bowl de riz façon poké au saumon",
+    "total_minutes": 35
+  },
+  {
+    "id": "burger-bacon-avocat",
+    "base_servings": 2,
+    "category": "Plat",
+    "description": "Burger de bœuf au cheddar fondu, bacon croustillant, avocat citronné et oignon rouge mariné, avec des frites maison cuites au four.",
+    "ingredients": [
+      {
+        "amount": 600,
+        "id": "0001",
+        "name": "pommes de terre à chair farineuse (Bintje, Agria)",
+        "unit": "g"
+      },
+      {
+        "amount": 2,
+        "id": "0002",
+        "name": "huile neutre ou d'olive (pour les frites)",
+        "unit": "tbsp"
+      },
+      {
+        "amount": 1,
+        "id": "0003",
+        "name": "paprika doux",
+        "unit": "tsp"
+      },
+      {
+        "amount": 1,
+        "id": "0004",
+        "name": "sel fin (pour les frites)",
+        "unit": "tsp"
+      },
+      {
+        "amount": 320,
+        "id": "0005",
+        "name": "bœuf haché à 15 % de matière grasse (2 steaks de 160 g)",
+        "unit": "g"
+      },
+      {
+        "amount": 2,
+        "id": "0006",
+        "name": "pains à burger briochés"
+      },
+      {
+        "amount": 2,
+        "id": "0007",
+        "name": "tranches de cheddar"
+      },
+      {
+        "amount": 4,
+        "id": "0008",
+        "name": "tranches fines de bacon ou poitrine fumée"
+      },
+      {
+        "amount": 1,
+        "id": "0009",
+        "name": "avocat bien mûr, grand"
+      },
+      {
+        "amount": 1,
+        "id": "0010",
+        "name": "citron vert"
+      },
+      {
+        "amount": 0.5,
+        "id": "0011",
+        "name": "oignon rouge"
+      },
+      {
+        "amount": 2,
+        "id": "0012",
+        "name": "mayonnaise",
+        "unit": "tbsp"
+      },
+      {
+        "amount": 1,
+        "id": "0013",
+        "name": "ketchup",
+        "unit": "tbsp"
+      },
+      {
+        "amount": 1,
+        "id": "0014",
+        "name": "moutarde",
+        "unit": "tsp"
+      },
+      {
+        "amount": 1,
+        "id": "0015",
+        "name": "piment d'Espelette (facultatif)",
+        "unit": "pinch"
+      },
+      {
+        "amount": 1,
+        "id": "0016",
+        "name": "tomate"
+      },
+      {
+        "amount": 20,
+        "id": "0017",
+        "name": "roquette",
+        "unit": "g"
+      },
+      {
+        "amount": 1,
+        "id": "0018",
+        "name": "sel (pour les steaks)",
+        "unit": "pinch"
+      },
+      {
+        "amount": 1,
+        "id": "0019",
+        "name": "poivre noir du moulin",
+        "unit": "pinch"
+      },
+      {
+        "amount": 1,
+        "id": "0020",
+        "name": "huile (pour la poêle)",
+        "unit": "tsp"
+      }
+    ],
+    "notes": "Frites plus croustillantes : le trempage retire l'amidon, bien sécher ensuite et ne pas entasser sur la plaque, sinon elles cuisent à la vapeur.\n\nAvocat : le couper au dernier moment et l'arroser de citron vert, sinon il noircit. S'il est un peu dur, l'écraser à la fourchette avec le citron vert et une pincée de sel, puis le tartiner sur le pain.\n\nSteak haché : le cuire à cœur à 71 °C, sans trace rosée. Ne pas trop travailler la viande en la façonnant et saler au dernier moment.\n\nVariantes : œuf au plat, coriandre fraîche dans la sauce, pepper jack à la place du cheddar.",
+    "order": 5,
+    "steps": [
+      {
+        "content": "Éplucher {0001} et les couper en bâtonnets de 1 cm. Les tremper 30 minutes dans l'eau froide. Pendant ce temps, préchauffer le four à 220 °C avec une plaque à l'intérieur.",
+        "id": "s1",
+        "timer_seconds": 1800,
+        "title": "Tremper les frites"
+      },
+      {
+        "content": "Égoutter les bâtonnets et les sécher soigneusement. Les mélanger avec {0002}, {0003} et {0004}. Les étaler en une seule couche sur la plaque chaude, sans qu'ils se touchent. Cuire 35 à 40 minutes en les retournant à mi-cuisson.",
+        "id": "s2",
+        "timer_seconds": 2100,
+        "title": "Cuire les frites"
+      },
+      {
+        "content": "Presser le jus de {0010} et en réserver 1 cuillère à café pour la sauce. Émincer finement {0011} et le laisser mariner 10 minutes avec une pincée de sel et le reste du jus.",
+        "id": "s3",
+        "timer_seconds": 600,
+        "title": "Mariner l'oignon rouge"
+      },
+      {
+        "content": "Mélanger {0012}, {0013}, {0014}, 1 cuillère à café du jus de citron vert réservé et {0015}. Goûter, ajuster le piquant et réserver au frais.",
+        "id": "s4",
+        "title": "Préparer la sauce"
+      },
+      {
+        "content": "Couper {0016} en rondelles. Diviser {0005} en deux galettes un peu plus larges que les pains, en creusant le centre au pouce. Garder au frais.",
+        "id": "s5",
+        "title": "Préparer les steaks et la tomate"
+      },
+      {
+        "content": "Pendant les 12 dernières minutes de cuisson des frites, glisser {0008} sur une seconde plaque dans le four, jusqu'à ce qu'elles soient croustillantes. Égoutter sur du papier absorbant.",
+        "id": "s6",
+        "timer_seconds": 720,
+        "title": "Cuire le bacon au four"
+      },
+      {
+        "content": "Chauffer {0020} dans une poêle à feu vif. Saler et poivrer les steaks avec {0018} et {0019}, cuire 4 minutes sans toucher, retourner, cuire 3 minutes, puis poser {0007} sur chaque steak et couvrir 1 minute.",
+        "id": "s7",
+        "timer_seconds": 480,
+        "title": "Cuire les steaks"
+      },
+      {
+        "content": "Dorer {0006} 1 minute face coupée vers le bas. Couper {0009} en tranches et les arroser aussitôt de citron vert. Monter : sauce, {0017}, tomate, steak fondu, bacon, avocat, oignon rouge égoutté, un peu de sauce. Servir avec les frites chaudes.",
+        "id": "s8",
+        "timer_seconds": 60,
+        "title": "Toaster les pains et monter"
+      }
+    ],
+    "title": "Burger bacon-avocat et frites au four",
+    "total_minutes": 60
+  }
+]

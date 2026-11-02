@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Carnet de cuisine</title>
+<meta name="description" content="Recettes du carnet, avec quantités ajustables, cases à cocher et minuteurs.">
+<meta name="theme-color" content="#F5F4F1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Carnet">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one narrow reading column built for a phone propped on a counter.
+   A ruled index of recipes, then a recipe sheet with a sticky servings bar. */
+:root {
+  --bg: #F5F4F1;
+  --surface: #FFFFFF;
+  --ink: #1B1A17;
+  --muted: #6A655C;
+  --line: #E2DFD8;
+  --accent: #C2560C;
+  --accent-ink: #FFFFFF;
+  --tint: #FCEBDD;
+  --alert: #B42318;
+  --alert-tint: #FDE8E6;
+  --font-display: "Bricolage Grotesque", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Hanken Grotesk", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121110;
+    --surface: #1C1A18;
+    --ink: #EEEBE6;
+    --muted: #A49E94;
+    --line: #2E2B27;
+    --accent: #FF9A4D;
+    --accent-ink: #121110;
+    --tint: #3A2414;
+    --alert: #FF8A7A;
+    --alert-tint: #3D1A16;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 1.0625rem/1.5 var(--font-body);
+  padding-top: calc(8px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--bg);
+  z-index: 10;
+}
+html.has-dock body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+.wrap { max-width: 40rem; margin: 0 auto; }
+h1, h2, h3, p, ul, ol { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* List view */
+.head { padding-top: 20px; display: flex; align-items: center; gap: 14px; }
+.head img { width: 52px; height: 52px; border-radius: 12px; border: 1px solid var(--line); flex: 0 0 auto; }
+.head-txt { display: grid; gap: 2px; min-width: 0; }
+.title { font: 700 2.2rem/1.05 var(--font-display); letter-spacing: -0.025em; text-wrap: balance; }
+.sub { color: var(--muted); font-size: 0.95rem; }
+.search { margin-top: 20px; }
+.search input {
+  width: 100%; height: 48px; padding: 0 16px;
+  font: inherit; font-size: 16px; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  -webkit-appearance: none; appearance: none;
+}
+.search input::placeholder { color: var(--muted); }
+.chips { display: flex; gap: 8px; overflow-x: auto; padding-block: 14px 6px; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex: 0 0 auto; min-height: 40px; padding: 0 16px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: var(--surface); font-size: 0.95rem; font-weight: 500;
+}
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.row { display: block; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.row:first-child { border-top: 1px solid var(--line); }
+.row:active h2 { color: var(--accent); }
+.r-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.row h2 { font: 600 1.35rem/1.2 var(--font-display); letter-spacing: -0.01em; text-wrap: balance; min-width: 0; }
+.new { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: var(--tint); padding: 2px 8px; border-radius: 999px; }
+.r-desc { margin-top: 6px; color: var(--muted); font-size: 0.97rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.meta { margin-top: 10px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); }
+.sync { margin-top: 18px; font-size: 0.85rem; color: var(--muted); }
+.empty { padding: 28px 0; display: grid; gap: 8px; border-top: 1px solid var(--line); }
+.empty strong { font: 600 1.25rem/1.25 var(--font-display); }
+.empty p { color: var(--muted); }
+.skel { height: 74px; border-bottom: 1px solid var(--line); display: grid; align-content: center; gap: 10px; }
+.skel i { display: block; height: 12px; border-radius: 6px; background: var(--line); }
+.skel i:first-child { width: 55%; height: 16px; }
+.skel i:last-child { width: 80%; }
+
+/* Recipe view */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 8px 0; background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.back { display: inline-flex; align-items: center; min-height: 44px; padding-right: 12px; font-weight: 600; color: var(--accent); }
+.stepper { display: flex; align-items: center; gap: 4px; }
+.stepper button {
+  width: 44px; height: 44px; border-radius: 12px; font-size: 1.4rem; line-height: 1;
+  background: var(--surface); border: 1px solid var(--line);
+}
+.stepper button:disabled { opacity: 0.4; }
+.stepper output { min-width: 5.2rem; text-align: center; font-weight: 600; font-variant-numeric: tabular-nums; }
+.r-title { margin-top: 22px; font: 700 2.05rem/1.1 var(--font-display); letter-spacing: -0.02em; text-wrap: balance; }
+.r-lead { margin-top: 10px; color: var(--muted); }
+.facts { margin-top: 12px; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); }
+.sec { margin-top: 34px; }
+.sec h2 { font: 700 1.3rem/1.2 var(--font-display); letter-spacing: -0.01em; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
+.hint { margin-top: 10px; padding: 8px 12px; background: var(--tint); border-radius: 10px; font-size: 0.9rem; }
+.ing {
+  width: 100%; display: flex; align-items: flex-start; gap: 14px; text-align: left;
+  min-height: 52px; padding: 12px 0; border-bottom: 1px solid var(--line);
+}
+.box {
+  flex: 0 0 auto; width: 24px; height: 24px; margin-top: 1px; border-radius: 7px;
+  border: 2px solid var(--muted); position: relative;
+}
+.ing[aria-checked="true"] .box { background: var(--accent); border-color: var(--accent); }
+.ing[aria-checked="true"] .box::after {
+  content: ""; position: absolute; left: 6px; top: 2px; width: 6px; height: 11px;
+  border: solid var(--accent-ink); border-width: 0 2.5px 2.5px 0; transform: rotate(45deg);
+}
+.i-q { flex: 0 0 4.8rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.i-n { min-width: 0; flex: 1 1 auto; }
+.ing[aria-checked="true"] .i-q, .ing[aria-checked="true"] .i-n { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+.step { display: grid; grid-template-columns: 2.4rem 1fr; gap: 0 4px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.step[data-done="true"] { opacity: 0.5; }
+.s-num { font: 700 1.6rem/1.1 var(--font-display); color: var(--accent); font-variant-numeric: tabular-nums; }
+.s-body { min-width: 0; display: grid; gap: 10px; }
+.s-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.s-head h3 { font: 600 1.15rem/1.25 var(--font-display); text-wrap: balance; }
+.s-done { flex: 0 0 auto; min-height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: var(--muted); background: var(--surface); }
+.step[data-done="true"] .s-done { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.s-text { overflow-wrap: anywhere; }
+.ref .q { font-weight: 700; font-variant-numeric: tabular-nums; background: var(--tint); padding: 0 6px; border-radius: 6px; }
+.ref b { font-weight: 600; }
+.timer {
+  justify-self: start; min-height: 44px; padding: 0 16px; border-radius: 999px;
+  border: 1px solid var(--accent); color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums;
+}
+.timer.run { background: var(--accent); color: var(--accent-ink); }
+.timer.done { background: var(--alert); border-color: var(--alert); color: var(--surface); }
+.note { margin-top: 12px; }
+.note + .note { margin-top: 10px; }
+.reset { margin-top: 34px; min-height: 44px; color: var(--muted); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Running timers, visible from every screen */
+.dock {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 6;
+  display: flex; gap: 8px; overflow-x: auto;
+  padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  background: var(--surface); border-top: 1px solid var(--line);
+}
+.dchip { flex: 0 0 auto; display: grid; padding: 6px 14px; border-radius: 12px; background: var(--tint); min-height: 44px; align-content: center; }
+.dchip small { font-size: 0.72rem; color: var(--muted); }
+.dchip strong { font-variant-numeric: tabular-nums; }
+.dchip.done { background: var(--alert-tint); color: var(--alert); }
+.dchip.done small { color: var(--alert); }
+
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="dock" id="dock" hidden></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var app = document.getElementById('app');
+  var dock = document.getElementById('dock');
+  var KEY_CACHE = 'carnet-cache-v1';
+  var KEY_STATE = 'carnet-state-v1';
+
+  var UNIT = {
+    g: 'g', kg: 'kg', ml: 'ml', l: 'l', oz: 'oz', lb: 'lb', fl_oz: 'fl oz', cup: 'tasse',
+    tsp: 'c. à café', tbsp: 'c. à soupe'
+  };
+
+  var recipes = [];
+  var loaded = false;
+  var synced = false;
+  var offline = false;
+  var query = '';
+  var cat = 'Tout';
+  var current = { view: 'list', id: null, sig: '' };
+
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  var state = {};
+  try { state = JSON.parse(lsGet(KEY_STATE) || '{}') || {}; } catch (e) { state = {}; }
+  function saveState() { lsSet(KEY_STATE, JSON.stringify(state)); }
+  function rs(id) { return state[id] || (state[id] = { servings: null, ing: {}, steps: {} }); }
+
+  try {
+    var cached = JSON.parse(lsGet(KEY_CACHE) || 'null');
+    if (Array.isArray(cached)) { recipes = cached; loaded = true; }
+  } catch (e) {}
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function norm(s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+
+  function sorted() {
+    return recipes.slice().sort(function (a, b) {
+      var oa = a.order == null ? 999 : a.order, ob = b.order == null ? 999 : b.order;
+      return (oa - ob) || String(a.title).localeCompare(String(b.title), 'fr');
+    });
+  }
+  function byId(id) { return recipes.filter(function (r) { return r.id === id; })[0]; }
+  function base(r) { return Number(r.base_servings) || 2; }
+  function isNew(r) { var t = Date.parse(r.added_at || ''); return t && (Date.now() - t) < 7 * 864e5; }
+
+  /* ---------- quantities ---------- */
+  var MARKS = [[0, ''], [0.25, '¼'], [1 / 3, '⅓'], [0.5, '½'], [2 / 3, '⅔'], [0.75, '¾'], [1, '']];
+  function fmtNum(n, unit) {
+    if (unit === 'g' || unit === 'ml' || unit === 'kg' || unit === 'l') {
+      if (unit === 'kg' || unit === 'l') { return String(Math.round(n * 100) / 100).replace('.', ','); }
+      return String(n >= 50 ? Math.round(n / 5) * 5 : Math.round(n));
+    }
+    var w = Math.floor(n + 1e-9), f = n - w, best = MARKS[0], i;
+    for (i = 0; i < MARKS.length; i++) { if (Math.abs(MARKS[i][0] - f) < Math.abs(best[0] - f)) best = MARKS[i]; }
+    if (best[0] === 1) { w += 1; best = MARKS[0]; }
+    if (w === 0 && best[1] === '') return '¼';
+    return (w ? String(w) : '') + (w && best[1] ? ' ' : '') + best[1];
+  }
+  function qty(ing, f) {
+    var n = Number(ing.amount) * (ing.fixed ? 1 : f);
+    var u = ing.unit;
+    var num = fmtNum(n, u);
+    if (!u) return num;
+    if (u === 'pinch') return num + ' ' + (n > 1 ? 'pincées' : 'pincée');
+    return num + ' ' + (UNIT[u] || u);
+  }
+  function shortName(ing) {
+    return String(ing.name || '').split(' : ')[0].replace(/\s*\(.*?\)\s*/g, ' ').trim();
+  }
+  function stepHtml(r, s, f) {
+    var map = {};
+    (r.ingredients || []).forEach(function (i) { map[i.id] = i; });
+    return esc(s.content).replace(/\{(\w+)\}/g, function (m, id) {
+      var i = map[id];
+      if (!i) return '';
+      return '<span class="ref"><span class="q">' + esc(qty(i, f)) + '</span> <b>' + esc(shortName(i)) + '</b></span>';
+    });
+  }
+  function fmtDur(s) {
+    if (s >= 3600) {
+      var h = Math.floor(s / 3600), m = Math.round((s % 3600) / 60);
+      return h + ' h' + (m ? ' ' + String(m).padStart(2, '0') : '');
+    }
+    if (s >= 60) return Math.round(s / 60) + ' min';
+    return s + ' s';
+  }
+  function mmss(s) {
+    var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), x = s % 60;
+    var p = String(m).padStart(2, '0') + ':' + String(x).padStart(2, '0');
+    return h ? h + ':' + p : p;
+  }
+
+  /* ---------- timers ---------- */
+  var timers = new Map();
+  var tickId = null;
+  var actx = null;
+  function unlockAudio() {
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      if (actx.resume) actx.resume();
+    } catch (e) {}
+  }
+  function beep() {
+    try {
+      if (!actx) return;
+      [0, 0.35, 0.7].forEach(function (d) {
+        var o = actx.createOscillator(), g = actx.createGain();
+        o.frequency.value = 880; g.gain.value = 0.15;
+        o.connect(g); g.connect(actx.destination);
+        o.start(actx.currentTime + d); o.stop(actx.currentTime + d + 0.2);
+      });
+    } catch (e) {}
+    try { if (navigator.vibrate) navigator.vibrate([200, 100, 200]); } catch (e) {}
+  }
+  function anyRunning() {
+    var run = false;
+    timers.forEach(function (t) { if (t.state === 'run') run = true; });
+    return run;
+  }
+  function tick() {
+    var now = Date.now();
+    timers.forEach(function (t) {
+      if (t.state === 'run' && now >= t.end) { t.state = 'done'; beep(); }
+    });
+    paintTimers();
+    if (!anyRunning() && tickId) { clearInterval(tickId); tickId = null; }
+  }
+  function paintTimers() {
+    Array.prototype.forEach.call(document.querySelectorAll('.timer'), function (b) {
+      var t = timers.get(b.dataset.key), secs = +b.dataset.secs, txt, cls = 'timer';
+      if (!t) { txt = 'Lancer ' + fmtDur(secs); }
+      else if (t.state === 'run') {
+        txt = mmss(Math.max(0, Math.ceil((t.end - Date.now()) / 1000))) + ' · arrêter'; cls += ' run';
+      } else { txt = 'Terminé · fermer'; cls += ' done'; }
+      b.className = cls;
+      if (b.textContent !== txt) b.textContent = txt;
+    });
+    var html = '';
+    timers.forEach(function (t) {
+      var left = t.state === 'run' ? mmss(Math.max(0, Math.ceil((t.end - Date.now()) / 1000))) : 'Terminé';
+      html += '<a class="dchip' + (t.state === 'done' ? ' done' : '') + '" href="#r-' + esc(t.rid) + '"><small>' +
+        esc(t.title) + ' · ' + esc(t.label) + '</small><strong>' + left + '</strong></a>';
+    });
+    dock.innerHTML = html;
+    dock.hidden = timers.size === 0;
+    document.documentElement.classList.toggle('has-dock', timers.size > 0);
+  }
+  function toggleTimer(btn) {
+    var key = btn.dataset.key, t = timers.get(key);
+    if (t) { timers.delete(key); paintTimers(); return; }
+    unlockAudio();
+    var secs = +btn.dataset.secs;
+    timers.set(key, { end: Date.now() + secs * 1000, state: 'run', rid: btn.dataset.rid, title: btn.dataset.title, label: btn.dataset.label });
+    if (!tickId) tickId = setInterval(tick, 500);
+    paintTimers();
+  }
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible' && timers.size) tick();
+  });
+
+  /* ---------- screen wake lock ---------- */
+  var wl = null;
+  function lock() {
+    try {
+      if (navigator.wakeLock && !wl && document.visibilityState === 'visible') {
+        navigator.wakeLock.request('screen').then(function (l) {
+          wl = l; l.addEventListener('release', function () { wl = null; });
+        }).catch(function () {});
+      }
+    } catch (e) {}
+  }
+  function unlock() { try { if (wl) wl.release(); } catch (e) {} wl = null; }
+  document.addEventListener('visibilitychange', function () { if (current.view === 'recipe') lock(); });
+
+  /* ---------- list view ---------- */
+  function openList() {
+    unlock();
+    current = { view: 'list', id: null, sig: '' };
+    app.innerHTML =
+      '<header class="head"><img src="icons/icon-180.png" alt=""><div class="head-txt"><h1 class="title">Carnet de cuisine</h1><p class="sub" id="sub"></p></div></header>' +
+      '<div class="search"><input id="q" type="search" placeholder="Chercher une recette ou un ingrédient" autocomplete="off" aria-label="Chercher une recette"></div>' +
+      '<div class="chips" id="chips"></div><div id="rows"></div><p class="sync" id="sync"></p>';
+    var q = document.getElementById('q');
+    q.value = query;
+    q.addEventListener('input', function () { query = q.value; updateList(); });
+    window.scrollTo(0, 0);
+    updateList();
+  }
+
+  function updateList() {
+    if (current.view !== 'list') return;
+    var all = sorted();
+    var sub = document.getElementById('sub'), chips = document.getElementById('chips'),
+        rows = document.getElementById('rows'), sync = document.getElementById('sync');
+    if (!rows) return;
+
+    sub.textContent = !loaded ? 'Chargement…' : all.length + (all.length > 1 ? ' recettes' : ' recette');
+
+    var cats = ['Tout'];
+    all.forEach(function (r) { if (r.category && cats.indexOf(r.category) < 0) cats.push(r.category); });
+    if (cats.indexOf(cat) < 0) cat = 'Tout';
+    chips.innerHTML = cats.length > 2 ? cats.map(function (c) {
+      return '<button class="chip" data-act="cat" data-cat="' + esc(c) + '" aria-pressed="' + (c === cat) + '">' + esc(c) + '</button>';
+    }).join('') : '';
+
+    if (!loaded) {
+      rows.innerHTML = '<div class="skel"><i></i><i></i></div><div class="skel"><i></i><i></i></div><div class="skel"><i></i><i></i></div>';
+    } else if (!all.length) {
+      rows.innerHTML = '<div class="empty"><strong>Le carnet est vide.</strong><p>' +
+        (offline ? 'Les recettes n’ont pas pu être chargées. Vérifiez la connexion puis rouvrez le carnet.'
+                 : 'Les recettes ajoutées au carnet apparaîtront ici.') + '</p></div>';
+    } else {
+      var nq = norm(query);
+      var shown = all.filter(function (r) {
+        if (cat !== 'Tout' && r.category !== cat) return false;
+        if (!nq) return true;
+        var hay = norm(r.title + ' ' + (r.description || '') + ' ' + (r.ingredients || []).map(function (i) { return i.name; }).join(' '));
+        return nq.split(/\s+/).every(function (w) { return hay.indexOf(w) >= 0; });
+      });
+      rows.innerHTML = shown.length ? shown.map(function (r) {
+        var meta = [];
+        if (r.category) meta.push(esc(r.category));
+        if (r.total_minutes) meta.push(esc(fmtDur(r.total_minutes * 60)));
+        meta.push(base(r) + ' pers.');
+        return '<a class="row" href="#r-' + esc(r.id) + '"><div class="r-top"><h2>' + esc(r.title) + '</h2>' +
+          (isNew(r) ? '<span class="new">Nouveau</span>' : '') + '</div>' +
+          (r.description ? '<p class="r-desc">' + esc(r.description) + '</p>' : '') +
+          '<p class="meta">' + meta.join(' · ') + '</p></a>';
+      }).join('') : '<div class="empty"><strong>Aucune recette trouvée.</strong><p>Essayez un autre mot ou choisissez « Tout ».</p></div>';
+    }
+
+    sync.textContent = synced ? '' : (offline && loaded && all.length ? 'Hors connexion : dernière copie enregistrée.' : '');
+  }
+
+  /* ---------- recipe view ---------- */
+  function openRecipe(id) {
+    current = { view: 'recipe', id: id, sig: '' };
+    mountRecipe(false);
+    lock();
+  }
+
+  function mountRecipe(keep) {
+    var y = window.scrollY;
+    var r = byId(current.id);
+    if (!r) {
+      app.innerHTML = '<div class="bar"><a class="back" href="#">‹ Carnet</a><span></span></div>' +
+        '<div class="empty" style="border-top:0"><strong>' +
+        (synced ? 'Recette introuvable.' : 'Chargement…') + '</strong><p>' +
+        (synced ? 'Elle a peut-être été retirée du carnet.' : '') + '</p></div>';
+      current.sig = '';
+      return;
+    }
+    current.sig = JSON.stringify(r);
+    var st = rs(r.id), b = base(r), S = st.servings || b, f = S / b;
+    var ing = (r.ingredients || []).map(function (i) {
+      var on = !!st.ing[i.id];
+      return '<li><button class="ing" role="checkbox" aria-checked="' + on + '" data-act="ing" data-id="' + esc(i.id) + '">' +
+        '<span class="box"></span><span class="i-q">' + esc(qty(i, f)) + '</span><span class="i-n">' + esc(i.name) + '</span></button></li>';
+    }).join('');
+    var steps = (r.steps || []).map(function (s, n) {
+      var done = !!st.steps[s.id];
+      var key = r.id + ':' + s.id;
+      return '<li class="step" data-done="' + done + '"><div class="s-num">' + (n + 1) + '</div><div class="s-body">' +
+        '<div class="s-head"><h3>' + esc(s.title) + '</h3><button class="s-done" data-act="step" data-id="' + esc(s.id) + '">' + (done ? 'Fait' : 'À faire') + '</button></div>' +
+        '<p class="s-text">' + stepHtml(r, s, f) + '</p>' +
+        (s.timer_seconds ? '<button class="timer" data-act="timer" data-key="' + esc(key) + '" data-secs="' + Number(s.timer_seconds) +
+          '" data-rid="' + esc(r.id) + '" data-title="' + esc(r.title) + '" data-label="' + esc(s.title) + '"></button>' : '') +
+        '</div></li>';
+    }).join('');
+    var notes = String(r.notes || '').split(/\n\s*\n/).filter(Boolean).map(function (p) {
+      return '<p class="note">' + esc(p) + '</p>';
+    }).join('');
+    var facts = [];
+    if (r.category) facts.push(esc(r.category));
+    if (r.total_minutes) facts.push(esc(fmtDur(r.total_minutes * 60)));
+
+    app.innerHTML =
+      '<div class="bar"><a class="back" href="#">‹ Carnet</a><div class="stepper">' +
+      '<button data-act="dec" aria-label="Une personne de moins"' + (S <= 1 ? ' disabled' : '') + '>−</button>' +
+      '<output aria-live="polite">' + S + ' pers.</output>' +
+      '<button data-act="inc" aria-label="Une personne de plus"' + (S >= 12 ? ' disabled' : '') + '>+</button></div></div>' +
+      '<h1 class="r-title">' + esc(r.title) + '</h1>' +
+      (r.description ? '<p class="r-lead">' + esc(r.description) + '</p>' : '') +
+      (facts.length ? '<p class="facts">' + facts.join(' · ') + '</p>' : '') +
+      '<section class="sec"><h2>Ingrédients</h2>' +
+      (S !== b ? '<p class="hint">Quantités recalculées pour ' + S + ' personnes (recette écrite pour ' + b + '). Les temps de cuisson ne changent pas.</p>' : '') +
+      '<ul>' + ing + '</ul></section>' +
+      '<section class="sec"><h2>Préparation</h2><ol>' + steps + '</ol></section>' +
+      (notes ? '<section class="sec"><h2>Astuces</h2>' + notes + '</section>' : '') +
+      '<button class="reset" data-act="reset">Tout remettre à zéro</button>';
+    window.scrollTo(0, keep ? y : 0);
+    paintTimers();
+  }
+
+  /* ---------- events ---------- */
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest ? e.target.closest('[data-act]') : null;
+    if (!el) return;
+    var act = el.dataset.act;
+    if (act === 'cat') { cat = el.dataset.cat; updateList(); return; }
+    if (act === 'timer') { toggleTimer(el); return; }
+    var r = byId(current.id);
+    if (!r) return;
+    var st = rs(r.id), b = base(r);
+    if (act === 'inc' || act === 'dec') {
+      var S = (st.servings || b) + (act === 'inc' ? 1 : -1);
+      st.servings = Math.min(12, Math.max(1, S));
+      if (st.servings === b) st.servings = null;
+      saveState(); mountRecipe(true);
+    } else if (act === 'ing') {
+      var id = el.dataset.id;
+      if (st.ing[id]) delete st.ing[id]; else st.ing[id] = 1;
+      el.setAttribute('aria-checked', String(!!st.ing[id]));
+      saveState();
+    } else if (act === 'step') {
+      var sid = el.dataset.id;
+      if (st.steps[sid]) delete st.steps[sid]; else st.steps[sid] = 1;
+      el.closest('.step').dataset.done = String(!!st.steps[sid]);
+      el.textContent = st.steps[sid] ? 'Fait' : 'À faire';
+      saveState();
+    } else if (act === 'reset') {
+      delete state[r.id]; saveState(); mountRecipe(true);
+    }
+  });
+
+  function route() {
+    var h = location.hash.replace(/^#/, '');
+    if (h.indexOf('r-') === 0) openRecipe(decodeURIComponent(h.slice(2))); else openList();
+  }
+  window.addEventListener('hashchange', route);
+
+  function refreshView() {
+    if (current.view === 'list') { updateList(); return; }
+    var r = byId(current.id);
+    var sig = r ? JSON.stringify(r) : '';
+    if (sig !== current.sig) mountRecipe(true);
+  }
+
+  /* ---------- data ---------- */
+  function load() {
+    return fetch('recipes.json', { cache: 'no-cache' })
+      .then(function (res) { if (!res.ok) throw new Error(res.status); return res.json(); })
+      .then(function (list) {
+        if (!Array.isArray(list)) throw new Error('format');
+        recipes = list; loaded = true; synced = true; offline = false;
+        lsSet(KEY_CACHE, JSON.stringify(list));
+        refreshView();
+      })
+      .catch(function () { loaded = true; offline = true; refreshView(); });
+  }
+
+  route();
+  load();
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') load(); });
+
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+  }
+})();
+</script>
+</body>
+</html>
