@@ -98,11 +98,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 svg.i { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ---------- List view ---------- */
-.head { padding-top: 14px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px 12px; }
+.head { padding-top: 14px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; }
 .head img { width: 44px; height: 44px; border-radius: 12px; box-shadow: 0 0 0 1px var(--line); flex: 0 0 auto; }
-.head-txt { grid-column: 1 / -1; display: grid; min-width: 0; }
+.head-txt { display: grid; gap: 1px; min-width: 0; }
 .kicker { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
-.title { font: 800 2.1rem/1.05 var(--font-display); letter-spacing: -0.025em; }
+.title { font: 800 1.75rem/1 var(--font-display); letter-spacing: 0.02em; }
 
 .search { margin-top: 22px; position: relative; }
 .search svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: var(--muted); pointer-events: none; }
@@ -159,7 +159,6 @@ svg.i { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColo
 }
 .back, .theme { width: 44px; height: 44px; flex: 0 0 auto; border-radius: 50%; display: grid; place-items: center; background: var(--soft); color: var(--ink); font-size: 1.3rem; }
 .theme { font-size: 1.25rem; }
-.head .theme { grid-column: 3; grid-row: 1; }
 .bar-end { display: flex; align-items: center; gap: 8px; }
 .stepper { display: flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--soft); }
 .stepper button { width: 40px; height: 40px; border-radius: 50%; font-size: 1.3rem; line-height: 1; background: var(--bg); box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
@@ -480,7 +479,7 @@ svg.i { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColo
     unlock();
     current = { view: 'list', id: null, sig: '' };
     app.innerHTML =
-      '<header class="head"><img src="icons/icon-180.png" alt=""><div class="head-txt"><span class="kicker" id="sub"></span><h1 class="title">Carnet de cuisine</h1></div>' + themeBtn() + '</header>' +
+      '<header class="head"><img src="icons/icon-180.png" alt=""><div class="head-txt"><span class="kicker" id="sub"></span><h1 class="title">COOKING</h1></div>' + themeBtn() + '</header>' +
       '<div class="search">' + ICON.search + '<input id="q" type="search" placeholder="Une recette, un ingrédient…" autocomplete="off" aria-label="Chercher une recette"></div>' +
       '<div class="cats" id="cats"></div><p class="sec-label" id="label"></p><div class="cards" id="rows"></div><p class="sync" id="sync"></p>';
     var q = document.getElementById('q');
