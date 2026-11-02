@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Carnet de cuisine</title>
 <meta name="description" content="Recettes du carnet, avec quantités ajustables, cases à cocher et minuteurs.">
-<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#111317" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FFFFFF">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Carnet">
@@ -42,27 +41,6 @@
   --font-display: "Bricolage Grotesque", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Hanken Grotesk", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
   color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #111317;
-    --soft: #1A1D22;
-    --ink: #EEF0F3;
-    --muted: #9AA1AD;
-    --line: #2A2E35;
-    --accent: #FF9A4D;
-    --accent-fill: #F27420;
-    --on-fill: #FFFFFF;
-    --alert: #FF7E6B;
-    --shadow: none;
-
-    --plat: #FF9A4D;   --plat-t: #3A2414;
-    --pizza: #FF7E6B;  --pizza-t: #3D1D18;
-    --pates: #F2C94C;  --pates-t: #383012;
-    --bowl: #4CD08A;   --bowl-t: #13301F;
-    --autre: #7FA2FF;  --autre-t: #1B2645;
-    color-scheme: dark;
-  }
 }
 :root[data-theme="dark"] {
   --bg: #111317;
@@ -477,10 +455,9 @@ svg.i { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColo
   document.addEventListener('visibilitychange', function () { if (current.view === 'recipe') lock(); });
 
   /* ---------- theme ---------- */
-  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
   function isDark() {
     var t = document.documentElement.getAttribute('data-theme');
-    return t ? t === 'dark' : !!(mq && mq.matches);
+    return t === 'dark';
   }
   function themeBtn() {
     var d = isDark();
@@ -496,10 +473,6 @@ svg.i { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColo
     document.documentElement.setAttribute('data-theme', next);
     lsSet('carnet-theme', next);
     paintTheme();
-  }
-  if (mq) {
-    var onSys = function () { if (!document.documentElement.getAttribute('data-theme')) paintTheme(); };
-    if (mq.addEventListener) mq.addEventListener('change', onSys); else if (mq.addListener) mq.addListener(onSys);
   }
 
   /* ---------- list view ---------- */
