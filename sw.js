@@ -1,7 +1,7 @@
 // Carnet de cuisine : copie hors connexion.
 // Toujours le réseau d'abord, pour que les nouvelles recettes apparaissent tout de suite ;
 // la copie enregistrée ne sert que si le téléphone est hors ligne.
-const CACHE = 'carnet-v1';
+const CACHE = 'carnet-v2';
 const SHELL = [
   './',
   './index.html',
