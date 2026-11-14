@@ -236,7 +236,10 @@ svg.i { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColo
 .dchip .tile { grid-row: span 2; width: 34px; height: 34px; border-radius: 11px; background: var(--bg); color: var(--c); display: grid; place-items: center; font-size: 1.2rem; }
 .dchip small { font-size: 0.72rem; color: var(--muted); }
 .dchip strong { font-variant-numeric: tabular-nums; }
-.dchip.done { background: var(--alert); color: var(--on-fill); }
+button.dchip { text-align: left; font: inherit; color: inherit; }
+.dchip.done { background: var(--alert); color: var(--on-fill); animation: ring 1.1s ease-in-out infinite; }
+@keyframes ring { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+@media (prefers-reduced-motion: reduce) { .dchip.done { animation: none; } }
 .dchip.done small { color: var(--on-fill); opacity: 0.85; }
 
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
@@ -374,37 +377,83 @@ svg.i { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColo
   /* ---------- timers ---------- */
   var timers = new Map();
   var tickId = null;
-  var actx = null;
+
+  /* Alarm: a two-note chime rendered once as a WAV file and played through an
+     <audio> element. On iPhone, an <audio> element first played from a tap may
+     play again later without one, and media audio sounds even in silent mode. */
+  var bell = null, ringing = false, ringStop = null;
+  function chimeUrl() {
+    var rate = 22050, len = Math.round(rate * 1.9);
+    var notes = [[880, 0, 0.24], [1318.5, 0.26, 0.6], [880, 0.9, 1.14], [1318.5, 1.16, 1.5]];
+    var buf = new ArrayBuffer(44 + len * 2), v = new DataView(buf), i;
+    function str(o, t) { for (var j = 0; j < t.length; j++) v.setUint8(o + j, t.charCodeAt(j)); }
+    str(0, 'RIFF'); v.setUint32(4, 36 + len * 2, true); str(8, 'WAVE'); str(12, 'fmt ');
+    v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+    v.setUint32(24, rate, true); v.setUint32(28, rate * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true);
+    str(36, 'data'); v.setUint32(40, len * 2, true);
+    for (i = 0; i < len; i++) {
+      var t = i / rate, x = 0;
+      for (var n = 0; n < notes.length; n++) {
+        var f = notes[n];
+        if (t >= f[1] && t < f[2]) {
+          var k = t - f[1], env = Math.min(1, k * 80) * Math.exp(-k * 5);
+          x += (Math.sin(2 * Math.PI * f[0] * k) + 0.3 * Math.sin(4 * Math.PI * f[0] * k)) * env;
+        }
+      }
+      v.setInt16(44 + i * 2, Math.max(-1, Math.min(1, x * 0.6)) * 32767, true);
+    }
+    return URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }));
+  }
   function unlockAudio() {
     try {
-      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
-      if (actx.resume) actx.resume();
+      if (!bell) { bell = new Audio(chimeUrl()); bell.preload = 'auto'; bell.loop = true; }
+      if (ringing) return;
+      bell.muted = true;
+      var reset = function () { if (!ringing) { bell.pause(); bell.currentTime = 0; bell.muted = false; } };
+      var p = bell.play();
+      if (p && p.then) p.then(reset, reset); else reset();
     } catch (e) {}
   }
-  function beep() {
+  function startRing() {
+    if (ringing) return;
+    ringing = true;
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
     try {
-      if (!actx) return;
-      [0, 0.35, 0.7].forEach(function (d) {
-        var o = actx.createOscillator(), g = actx.createGain();
-        o.frequency.value = 880; g.gain.value = 0.15;
-        o.connect(g); g.connect(actx.destination);
-        o.start(actx.currentTime + d); o.stop(actx.currentTime + d + 0.2);
-      });
+      if (bell) {
+        bell.muted = false; bell.currentTime = 0;
+        var p = bell.play();
+        if (p && p.catch) p.catch(function () {});
+      }
     } catch (e) {}
-    try { if (navigator.vibrate) navigator.vibrate([200, 100, 200]); } catch (e) {}
+    try { if (navigator.vibrate) navigator.vibrate([400, 200, 400, 200, 400]); } catch (e) {}
+    clearTimeout(ringStop);
+    ringStop = setTimeout(stopRing, 60000);
   }
-  function anyRunning() {
-    var run = false;
-    timers.forEach(function (t) { if (t.state === 'run') run = true; });
-    return run;
+  function stopRing() {
+    ringing = false;
+    clearTimeout(ringStop);
+    try { if (bell) { bell.pause(); bell.currentTime = 0; } } catch (e) {}
+    try { if (navigator.audioSession) navigator.audioSession.type = 'auto'; } catch (e) {}
+  }
+  function anyState(s) {
+    var found = false;
+    timers.forEach(function (t) { if (t.state === s) found = true; });
+    return found;
+  }
+  function removeTimer(key) {
+    timers.delete(key);
+    if (!anyState('done')) stopRing();
+    if (!timers.size && current.view !== 'recipe') unlock();
+    paintTimers();
   }
   function tick() {
-    var now = Date.now();
+    var now = Date.now(), finished = false;
     timers.forEach(function (t) {
-      if (t.state === 'run' && now >= t.end) { t.state = 'done'; beep(); }
+      if (t.state === 'run' && now >= t.end) { t.state = 'done'; finished = true; }
     });
+    if (finished) { startRing(); lock(); }
     paintTimers();
-    if (!anyRunning() && tickId) { clearInterval(tickId); tickId = null; }
+    if (!anyState('run') && tickId) { clearInterval(tickId); tickId = null; }
   }
   function paintTimers() {
     Array.prototype.forEach.call(document.querySelectorAll('.timer'), function (b) {
@@ -412,28 +461,51 @@ svg.i { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColo
       if (!t) { txt = 'Lancer ' + fmtDur(secs); }
       else if (t.state === 'run') {
         txt = mmss(Math.max(0, Math.ceil((t.end - Date.now()) / 1000))) + ' · arrêter'; cls += ' run';
-      } else { txt = 'Terminé · fermer'; cls += ' done'; }
+      } else { txt = 'Terminé · arrêter'; cls += ' done'; }
       b.className = cls;
       var label = b.querySelector('span');
       if (label.textContent !== txt) label.textContent = txt;
     });
-    var html = '';
-    timers.forEach(function (t) {
-      var left = t.state === 'run' ? mmss(Math.max(0, Math.ceil((t.end - Date.now()) / 1000))) : 'Terminé';
-      html += '<a class="dchip c-' + t.ck + (t.state === 'done' ? ' done' : '') + '" href="#r-' + esc(t.rid) + '">' +
-        '<span class="tile">' + ICON[t.ck] + '</span><small>' + esc(t.label) + '</small><strong>' + left + '</strong></a>';
+    /* Update the bar in place: a chip is rebuilt only when its timer is new or
+       has just finished, so a tap on it is never lost to a redraw. */
+    var seen = {};
+    timers.forEach(function (t, key) {
+      seen[key] = 1;
+      var el = null;
+      Array.prototype.forEach.call(dock.children, function (c) { if (c.dataset.key === key) el = c; });
+      if (!el || el.dataset.state !== t.state) {
+        var html;
+        if (t.state === 'done') {
+          html = '<button class="dchip done c-' + t.ck + '" data-act="dismiss" data-key="' + esc(key) + '" data-state="done" aria-label="Arrêter le minuteur ' + esc(t.label) + '">' +
+            '<span class="tile">' + ICON[t.ck] + '</span><small>' + esc(t.label) + '</small><strong>Terminé · arrêter</strong></button>';
+        } else {
+          html = '<a class="dchip c-' + t.ck + '" href="#r-' + esc(t.rid) + '" data-key="' + esc(key) + '" data-state="run">' +
+            '<span class="tile">' + ICON[t.ck] + '</span><small>' + esc(t.label) + '</small><strong></strong></a>';
+        }
+        var tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        var chip = tmp.firstChild;
+        if (el) dock.replaceChild(chip, el); else dock.appendChild(chip);
+        el = chip;
+      }
+      if (t.state === 'run') {
+        var left = mmss(Math.max(0, Math.ceil((t.end - Date.now()) / 1000)));
+        var strong = el.querySelector('strong');
+        if (strong.textContent !== left) strong.textContent = left;
+      }
     });
-    dock.innerHTML = html;
+    Array.prototype.slice.call(dock.children).forEach(function (c) { if (!seen[c.dataset.key]) dock.removeChild(c); });
     dock.hidden = timers.size === 0;
     document.documentElement.classList.toggle('has-dock', timers.size > 0);
   }
   function toggleTimer(btn) {
-    var key = btn.dataset.key, t = timers.get(key);
-    if (t) { timers.delete(key); paintTimers(); return; }
+    var key = btn.dataset.key;
+    if (timers.has(key)) { removeTimer(key); return; }
     unlockAudio();
     var secs = +btn.dataset.secs;
     timers.set(key, { end: Date.now() + secs * 1000, state: 'run', rid: btn.dataset.rid, ck: btn.dataset.ck, label: btn.dataset.label });
     if (!tickId) tickId = setInterval(tick, 500);
+    lock();
     paintTimers();
   }
   document.addEventListener('visibilitychange', function () {
@@ -452,7 +524,7 @@ svg.i { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColo
     } catch (e) {}
   }
   function unlock() { try { if (wl) wl.release(); } catch (e) {} wl = null; }
-  document.addEventListener('visibilitychange', function () { if (current.view === 'recipe') lock(); });
+  document.addEventListener('visibilitychange', function () { if (current.view === 'recipe' || timers.size) lock(); });
 
   /* ---------- theme ---------- */
   function isDark() {
@@ -477,7 +549,7 @@ svg.i { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColo
 
   /* ---------- list view ---------- */
   function openList() {
-    unlock();
+    if (!timers.size) unlock();
     current = { view: 'list', id: null, sig: '' };
     app.innerHTML =
       '<header class="head"><img src="icons/icon-180.png" alt=""><div class="head-txt"><span class="kicker" id="sub"></span><h1 class="title">COOKING</h1></div>' + themeBtn() + '</header>' +
@@ -615,6 +687,7 @@ svg.i { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColo
     if (act === 'theme') { toggleTheme(); return; }
     if (act === 'cat') { cat = el.dataset.cat; updateList(); return; }
     if (act === 'timer') { toggleTimer(el); return; }
+    if (act === 'dismiss') { removeTimer(el.dataset.key); return; }
     var r = byId(current.id);
     if (!r) return;
     var st = rs(r.id), b = base(r);
