@@ -129,13 +129,14 @@ svg.i { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColo
 .sec-label { margin-top: 18px; margin-bottom: 10px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .cards { display: grid; gap: 10px; }
 .card {
-  display: grid; grid-template-columns: 60px 1fr; gap: 14px; align-items: start;
-  padding: 14px; border-radius: 20px; background: var(--bg);
+  display: grid; grid-template-columns: 84px minmax(0, 1fr); align-items: stretch;
+  border-radius: 20px; background: var(--bg); overflow: hidden;
   border: 1px solid var(--line); box-shadow: var(--shadow);
 }
 .card:active { background: var(--soft); }
-.card .tile { width: 60px; height: 60px; border-radius: 18px; display: grid; place-items: center; background: var(--ct); color: var(--c); font-size: 2rem; }
-.card-body { min-width: 0; display: grid; gap: 4px; }
+.card .ph { position: relative; min-height: 116px; background: var(--ct); color: var(--c); display: grid; place-items: center; font-size: 2rem; }
+.card .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.card-body { min-width: 0; display: grid; gap: 4px; align-content: start; padding: 14px 14px 14px 14px; }
 .card-top { display: flex; align-items: center; gap: 8px; }
 .card-cat { font-size: 0.76rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--c); }
 .new { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--on-fill); background: var(--accent-fill); padding: 1px 8px; border-radius: 999px; }
@@ -531,7 +532,7 @@ svg.i { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColo
     label.textContent = nq ? shown.length + (shown.length > 1 ? ' résultats' : ' résultat') : (cat === 'Tout' ? 'Toutes les recettes' : cat);
     rows.innerHTML = shown.length ? shown.map(function (r) {
       var k = catKey(r.category);
-      return '<a class="card c-' + k + '" href="#r-' + esc(r.id) + '"><span class="tile">' + ICON[k] + '</span>' +
+      return '<a class="card c-' + k + '" href="#r-' + esc(r.id) + '"><span class="ph">' + (r.photo ? '<img src="' + esc(r.photo) + '" alt="" loading="lazy" decoding="async">' : ICON[k]) + '</span>' +
         '<div class="card-body"><div class="card-top"><span class="card-cat">' + esc(r.category || 'Recette') + '</span>' +
         (isNew(r) ? '<span class="new">Nouveau</span>' : '') + '</div>' +
         '<h2>' + esc(r.title) + '</h2>' +

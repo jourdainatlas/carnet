@@ -178,7 +178,8 @@
       }
     ],
     "title": "Chicken katsu façon cordon bleu",
-    "total_minutes": 35
+    "total_minutes": 35,
+    "photo": "photos/chicken-katsu.jpg"
   },
   {
     "id": "pizza-jambon-champignons-oeuf",
@@ -294,7 +295,8 @@
       }
     ],
     "title": "Pizza jambon, champignons et œuf",
-    "total_minutes": 45
+    "total_minutes": 45,
+    "photo": "photos/pizza-jambon-champignons-oeuf.jpg"
   },
   {
     "id": "pates-burrata-peches",
@@ -407,7 +409,8 @@
       }
     ],
     "title": "Pâtes burrata, pêches et jambon cru",
-    "total_minutes": 25
+    "total_minutes": 25,
+    "photo": "photos/pates-burrata-peches.jpg"
   },
   {
     "id": "bowl-poke-saumon",
@@ -565,7 +568,8 @@
       }
     ],
     "title": "Bowl de riz façon poké au saumon",
-    "total_minutes": 35
+    "total_minutes": 35,
+    "photo": "photos/bowl-poke-saumon.jpg"
   },
   {
     "id": "burger-bacon-avocat",
@@ -738,7 +742,8 @@
       }
     ],
     "title": "Burger bacon-avocat et frites au four",
-    "total_minutes": 60
+    "total_minutes": 60,
+    "photo": "photos/burger-bacon-avocat.jpg"
   },
   {
     "id": "hambagu-oeuf-riz",
@@ -927,6 +932,7 @@
         "content": "Dans chaque assiette, poser un dôme de riz, la galette nappée de sauce, puis l'œuf au plat par-dessus. Parsemer d'oignon nouveau émincé et de graines de sésame. Crever le jaune à table : il se mêle à la sauce et au riz."
       }
     ],
-    "notes": "Le jaune coulant est la seconde sauce du plat : ne pas trop cuire les œufs, 3 minutes à couvert suffisent.\n\nPourquoi la galette est si moelleuse : la panade (chapelure et lait), l'oignon fondu et le pétrissage. Ne pas sauter le refroidissement de l'oignon.\n\nCuisson : la viande hachée doit être cuite à cœur, à 71 °C, sans trace rosée.\n\nSans Worcestershire : 1 c. à soupe de sauce soja et ½ c. à café de vinaigre balsamique pour 2 c. à soupe de Worcestershire.\n\nAccompagnement : quelques bouquets de brocoli à la vapeur (5 minutes) ou la salade de concombre au sésame du katsu apportent de la fraîcheur.\n\nÀ l'avance : les galettes façonnées se gardent 24 h au frais, ou 1 mois au congélateur, crues."
+    "notes": "Le jaune coulant est la seconde sauce du plat : ne pas trop cuire les œufs, 3 minutes à couvert suffisent.\n\nPourquoi la galette est si moelleuse : la panade (chapelure et lait), l'oignon fondu et le pétrissage. Ne pas sauter le refroidissement de l'oignon.\n\nCuisson : la viande hachée doit être cuite à cœur, à 71 °C, sans trace rosée.\n\nSans Worcestershire : 1 c. à soupe de sauce soja et ½ c. à café de vinaigre balsamique pour 2 c. à soupe de Worcestershire.\n\nAccompagnement : quelques bouquets de brocoli à la vapeur (5 minutes) ou la salade de concombre au sésame du katsu apportent de la fraîcheur.\n\nÀ l'avance : les galettes façonnées se gardent 24 h au frais, ou 1 mois au congélateur, crues.",
+    "photo": "photos/hambagu-oeuf-riz.jpg"
   }
 ]

@@ -19,6 +19,7 @@ Toutes les recettes sont dans `recipes.json`, un tableau d'objets :
 | `ingredients` | `{ id, name, amount, unit?, fixed? }` ; unités : `g`, `kg`, `ml`, `l`, `tsp`, `tbsp`, `pinch` ; `fixed: true` empêche le recalcul selon les portions (huile de friture, œufs de panure) |
 | `steps` | `{ id, title, content, timer_seconds? }` ; `{0001}` dans `content` insère la quantité recalculée de l'ingrédient `0001` |
 | `notes` | astuces, paragraphes séparés par une ligne vide |
+| `photo` | facultatif : chemin d'une photo carrée dans `photos/` (640 px, JPEG) ; sans photo, la carte affiche le symbole de la catégorie |
 
 Après un push sur `main`, GitHub Pages republie le site en une minute environ.
 
@@ -28,3 +29,4 @@ Après un push sur `main`, GitHub Pages republie le site en une minute environ.
 - `recipes.json` : les recettes
 - `sw.js` : copie hors connexion (réseau d'abord, copie locale en secours)
 - `manifest.webmanifest`, `icons/` : nom et icône sur l'écran d'accueil
+- `photos/` : une photo par recette, illustrations générées par IA (Creative Claw, Nano Banana 2)

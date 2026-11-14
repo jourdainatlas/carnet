@@ -1,7 +1,7 @@
 // Carnet de cuisine : copie hors connexion.
 // Toujours le réseau d'abord, pour que les nouvelles recettes apparaissent tout de suite ;
 // la copie enregistrée ne sert que si le téléphone est hors ligne.
-const CACHE = 'carnet-v4';
+const CACHE = 'carnet-v5';
 const SHELL = [
   './',
   './index.html',
@@ -10,7 +10,13 @@ const SHELL = [
   './icons/icon-180.png',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/favicon-32.png'
+  './icons/favicon-32.png',
+  './photos/chicken-katsu.jpg',
+  './photos/pizza-jambon-champignons-oeuf.jpg',
+  './photos/pates-burrata-peches.jpg',
+  './photos/bowl-poke-saumon.jpg',
+  './photos/burger-bacon-avocat.jpg',
+  './photos/hambagu-oeuf-riz.jpg'
 ];
 
 self.addEventListener('install', (event) => {
