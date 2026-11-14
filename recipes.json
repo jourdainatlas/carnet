@@ -739,5 +739,194 @@
     ],
     "title": "Burger bacon-avocat et frites au four",
     "total_minutes": 60
+  },
+  {
+    "id": "hambagu-oeuf-riz",
+    "title": "Hambagu, œuf au plat et riz",
+    "description": "Galette de bœuf moelleuse nappée de sauce sucrée-salée, coiffée d'un œuf au plat au jaune coulant, avec un bol de riz japonais.",
+    "category": "Plat",
+    "order": 6,
+    "base_servings": 2,
+    "total_minutes": 45,
+    "added_at": "2026-11-14T10:45:00+01:00",
+    "ingredients": [
+      {
+        "id": "0001",
+        "name": "bœuf haché à 15 % de matière grasse (ou 200 g bœuf + 100 g porc haché)",
+        "amount": 300,
+        "unit": "g"
+      },
+      {
+        "id": "0002",
+        "name": "oignon jaune",
+        "amount": 0.5
+      },
+      {
+        "id": "0003",
+        "name": "beurre (pour l'oignon)",
+        "amount": 10,
+        "unit": "g"
+      },
+      {
+        "id": "0004",
+        "name": "chapelure panko",
+        "amount": 20,
+        "unit": "g"
+      },
+      {
+        "id": "0005",
+        "name": "lait (pour la panade)",
+        "amount": 2,
+        "unit": "tbsp"
+      },
+      {
+        "id": "0006",
+        "name": "petit œuf (pour la farce)",
+        "amount": 1
+      },
+      {
+        "id": "0007",
+        "name": "sel fin",
+        "amount": 0.5,
+        "unit": "tsp"
+      },
+      {
+        "id": "0008",
+        "name": "poivre noir du moulin",
+        "amount": 1,
+        "unit": "pinch"
+      },
+      {
+        "id": "0009",
+        "name": "noix de muscade râpée",
+        "amount": 1,
+        "unit": "pinch"
+      },
+      {
+        "id": "0010",
+        "name": "huile neutre (pour les galettes)",
+        "amount": 1,
+        "unit": "tsp"
+      },
+      {
+        "id": "0011",
+        "name": "eau (pour la cuisson à l'étouffée)",
+        "amount": 3,
+        "unit": "tbsp"
+      },
+      {
+        "id": "0012",
+        "name": "ketchup",
+        "amount": 3,
+        "unit": "tbsp"
+      },
+      {
+        "id": "0013",
+        "name": "sauce Worcestershire",
+        "amount": 2,
+        "unit": "tbsp"
+      },
+      {
+        "id": "0014",
+        "name": "sucre en poudre",
+        "amount": 1,
+        "unit": "tsp"
+      },
+      {
+        "id": "0015",
+        "name": "eau (pour la sauce)",
+        "amount": 2,
+        "unit": "tbsp"
+      },
+      {
+        "id": "0016",
+        "name": "beurre (pour la sauce)",
+        "amount": 10,
+        "unit": "g"
+      },
+      {
+        "id": "0017",
+        "name": "riz japonais (type sushi)",
+        "amount": 170,
+        "unit": "g"
+      },
+      {
+        "id": "0018",
+        "name": "œufs (1 par assiette)",
+        "amount": 2
+      },
+      {
+        "id": "0019",
+        "name": "huile neutre (pour les œufs)",
+        "amount": 1,
+        "unit": "tsp"
+      },
+      {
+        "id": "0020",
+        "name": "oignon nouveau (facultatif)",
+        "amount": 1
+      },
+      {
+        "id": "0021",
+        "name": "graines de sésame (facultatif)",
+        "amount": 1,
+        "unit": "tsp"
+      }
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "title": "Cuire le riz",
+        "content": "Rincer {0017} à l'eau froide 4 à 5 fois, jusqu'à ce que l'eau soit claire. Cuire selon les indications du paquet, puis laisser reposer 10 minutes à couvert hors du feu. Il restera chaud pendant la suite.",
+        "timer_seconds": 1200
+      },
+      {
+        "id": "s2",
+        "title": "Fondre l'oignon",
+        "content": "Hacher très finement {0002}. Le faire revenir dans {0003} à feu moyen 5 minutes, jusqu'à ce qu'il soit translucide et légèrement doré. Le laisser refroidir dans une assiette.",
+        "timer_seconds": 300
+      },
+      {
+        "id": "s3",
+        "title": "Préparer la panade",
+        "content": "Mélanger {0004} et {0005} dans un grand bol et laisser gonfler 5 minutes.",
+        "timer_seconds": 300
+      },
+      {
+        "id": "s4",
+        "title": "Pétrir la farce",
+        "content": "Ajouter dans le bol {0001}, l'oignon refroidi, {0006}, {0007}, {0008} et {0009}. Pétrir à la main 1 à 2 minutes, jusqu'à ce que la farce devienne collante et se tienne."
+      },
+      {
+        "id": "s5",
+        "title": "Façonner et chasser l'air",
+        "content": "Former deux ovales d'environ 2,5 cm d'épaisseur. Lancer chaque galette 5 ou 6 fois d'une main à l'autre pour chasser l'air, creuser légèrement le centre au pouce et réserver 10 minutes au frais.",
+        "timer_seconds": 600
+      },
+      {
+        "id": "s6",
+        "title": "Saisir puis cuire à l'étouffée",
+        "content": "Chauffer {0010} dans une poêle à feu moyen-vif. Saisir les galettes 3 minutes sans y toucher. Les retourner, verser {0011}, couvrir et baisser à feu doux 7 à 8 minutes. Elles sont cuites quand un jus clair perle au centre (71 °C à cœur).",
+        "timer_seconds": 480
+      },
+      {
+        "id": "s7",
+        "title": "Cuire les œufs au plat",
+        "content": "Pendant la cuisson à l'étouffée, chauffer {0019} dans une seconde poêle à feu moyen-doux. Casser {0018} côte à côte, saler légèrement le blanc et couvrir 3 minutes, jusqu'à ce que le blanc soit pris et le jaune encore coulant.",
+        "timer_seconds": 180
+      },
+      {
+        "id": "s8",
+        "title": "Faire la sauce",
+        "content": "Réserver les galettes. Dans leur poêle, sans la nettoyer, verser {0012}, {0013}, {0014} et {0015}. Laisser bouillonner 1 minute en grattant les sucs. Hors du feu, ajouter {0016} et remuer jusqu'à ce que la sauce soit brillante. Remettre les galettes 30 secondes pour les napper.",
+        "timer_seconds": 60
+      },
+      {
+        "id": "s9",
+        "title": "Dresser",
+        "content": "Dans chaque assiette, poser un dôme de riz, la galette nappée de sauce, puis l'œuf au plat par-dessus. Parsemer d'oignon nouveau émincé et de graines de sésame. Crever le jaune à table : il se mêle à la sauce et au riz."
+      }
+    ],
+    "notes": "Le jaune coulant est la seconde sauce du plat : ne pas trop cuire les œufs, 3 minutes à couvert suffisent.\n\nPourquoi la galette est si moelleuse : la panade (chapelure et lait), l'oignon fondu et le pétrissage. Ne pas sauter le refroidissement de l'oignon.\n\nCuisson : la viande hachée doit être cuite à cœur, à 71 °C, sans trace rosée.\n\nSans Worcestershire : 1 c. à soupe de sauce soja et ½ c. à café de vinaigre balsamique pour 2 c. à soupe de Worcestershire.\n\nAccompagnement : quelques bouquets de brocoli à la vapeur (5 minutes) ou la salade de concombre au sésame du katsu apportent de la fraîcheur.\n\nÀ l'avance : les galettes façonnées se gardent 24 h au frais, ou 1 mois au congélateur, crues."
   }
 ]
